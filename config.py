@@ -5,7 +5,8 @@ DEBUG = False
 LOG_LEVEL = logging.INFO
 
 BOT_TOKEN = None
-DB_DSN = None
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
