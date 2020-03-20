@@ -3,6 +3,7 @@ import logging
 import redis
 
 # Enable logging
+import config
 
 log = logging.getLogger(__name__)
 
@@ -27,8 +28,7 @@ class Storage:
 
     @classmethod
     def init(cls):
-        # _redis = redis.Redis(host=config.REDIS_HOST, port=config.REDIS_PORT, db=config.REDIS_DB)
-        cls._redis = redis.Redis(decode_responses=True)
+        cls._redis = redis.Redis(host=config.REDIS_HOST, port=config.REDIS_PORT, decode_responses=True)
 
     @classmethod
     def close(cls):
