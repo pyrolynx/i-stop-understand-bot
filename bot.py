@@ -3,12 +3,10 @@ import logging
 from telegram.ext import (CommandHandler, Updater, CallbackContext, CallbackQueryHandler)
 import telegram
 
-import config
-import errors
-import utils
-from storage import Storage
+from application import config, errors, utils
+from application.storage import Storage
 
-log = logging.getLogger(__name__)
+log = logging.getLogger('bot')
 
 start_understand_keyboard = telegram.InlineKeyboardMarkup([[
     telegram.InlineKeyboardButton('I\'m start understanding!', callback_data='1')]])
@@ -86,34 +84,24 @@ def error(update, context):
 
 def main():
     """Run bot."""
-    # Create the Updater and pass it your bot's token.
-    # Make sure to set use_context=True to use the new context based callbacks
-    # Post version 12 this will no longer be necessary
     assert config.BOT_TOKEN
     updater = Updater(config.BOT_TOKEN, use_context=True)
 
     Storage.init()
 
-    # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
-
-    # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", start))
     dispatcher.add_handler(CommandHandler("join", join_group, pass_args=True, pass_chat_data=True))
     dispatcher.add_handler(CommandHandler("new", new_group, pass_args=True, pass_chat_data=True))
     updater.dispatcher.add_handler(CallbackQueryHandler(keyboard_callback))
-
-    # log all errors
     dispatcher.add_error_handler(error)
 
-    # Start the Bot
+    log.info('Bot started')
     updater.start_polling()
 
-    # Block until you press Ctrl-C or the process receives SIGINT, SIGTERM or
-    # SIGABRT. This should be used most of the time, since start_polling() is
-    # non-blocking and will stop the bot gracefully.
     updater.idle()
+    log.info(f'Bot shutdown...')
     Storage.close()
 
 

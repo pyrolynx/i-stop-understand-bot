@@ -4,7 +4,7 @@ import string
 
 import telegram
 
-import errors
+from application import errors
 
 log = logging.getLogger('bot')
 

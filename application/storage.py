@@ -3,7 +3,7 @@ import logging
 import redis
 
 # Enable logging
-import config
+from application import config
 
 log = logging.getLogger(__name__)
 

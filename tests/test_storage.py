@@ -2,8 +2,8 @@ import random
 
 import pytest
 
-import utils
-from storage import Storage
+from application import utils
+from application.storage import Storage
 
 
 @pytest.fixture(scope='module', autouse=True)
