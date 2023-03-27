@@ -1,4 +1,4 @@
 python-telegram-bot==12.4.2
 pytest==5.4.1
-redis==3.4.1
+redis==4.5.3
 pytest-cover==3.0.0
